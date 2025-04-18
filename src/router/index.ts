@@ -1,14 +1,19 @@
 import type { App } from 'vue'
-// 引入 login.ts
-import LoginRouter from './modules/index'
-// 引入 test.ts
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import LoginRouter from './modules/index'
+import ErrorRouter from './modules/error'
+import { setupRouterGuard } from './guard'
 
-export const publicRoutes: Array<RouteRecordRaw> = [...LoginRouter]
+// 公共路由
+export const publicRoutes: Array<RouteRecordRaw> = [
+  ...LoginRouter,
+  ...ErrorRouter,
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: publicRoutes,
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
 /* 初始化路由表 */
@@ -21,7 +26,11 @@ export function resetRouter() {
     }
   })
 }
+
 /* 导出 setupRouter */
 export const setupRouter = (app: App<Element>) => {
   app.use(router)
+  setupRouterGuard(router)
 }
+
+export default router

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-red w-full">1111</div>
+  <div>111</div>
 </template>
 
 <script setup lang="ts"></script>
